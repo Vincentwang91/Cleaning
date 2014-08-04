@@ -29,5 +29,27 @@ write.csv(Duplis, "Duplis.csv")
 ##for(i in 1:length(Names))
 ##  if(grepl("\\((.*)）",Names[i]))
 ##    x[i] <- Names[i]
-
-
+companylist <- read.csv("Duplis.csv",header=T)
+Duplicateddd <- function(){
+  Duplicateditems <- data.frame(No.=1,Name=NA,Company.Name=NA,Phone=1)
+  for(i in 1:length(MKTcompleted$Company.Name)){
+    if(MKTcompleted$Company.Name[i] %in% companylist$ShortName){
+      dshort <- companylist$ShortName
+      for(j in i:length(MKTcompleted$Company.Name))
+        if(MKTcompleted$Company.Name[i] %in% companylist$LongName[companylist$ShortName==dshort])
+          if(MKTcompleted$Name[i]==MKTcompleted$Name[j])
+            Duplicateditems <- rbind(
+                  Duplicateditems,
+                  c(as.numeric(MKTcompleted$No.[i]),
+                    as.character(MKTcompleted$Name[i]),
+                    as.character(MKTcompleted$Company.Name[i]),
+                    as.numeric(MKTcompleted$电话[i])
+                  ),
+                  c(as.numeric(MKTcompleted$No.[j]),
+                    as.character(MKTcompleted$Name[j]),
+                    as.character(MKTcompleted$Company.Name[j]),
+                    as.numeric(MKTcompleted$电话[j])
+                  ))
+    }
+  }
+}
